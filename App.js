@@ -19,7 +19,7 @@ import JString from "./jsonfile";
 import GestureRecognizer, {
   swipeDirections
 } from "react-native-swipe-gestures";
-import Swiper from 'react-native-swiper';
+import Swiper from "react-native-swiper";
 
 export default class App extends Component<Props> {
   constructor(props) {
@@ -45,7 +45,10 @@ export default class App extends Component<Props> {
   }
 
   onSwipe(gestureName, gestureState) {
-    const { /*SWIPE_UP, SWIPE_DOWN,*/ SWIPE_LEFT, SWIPE_RIGHT } = swipeDirections;
+    const {
+      /*SWIPE_UP, SWIPE_DOWN,*/ SWIPE_LEFT,
+      SWIPE_RIGHT
+    } = swipeDirections;
     this.setState({ gestureName: gestureName });
     switch (gestureName) {
       /*case SWIPE_UP:
@@ -115,20 +118,17 @@ export default class App extends Component<Props> {
     }
   };
 
-
-  prevQuote = (prev) => {
+  prevQuote = prev => {
     const { activeQuoteIndex } = this.state;
 
     if (activeQuoteIndex < this.state.dataSource.length - 1) {
       this.setState({
-        activeQuoteIndex:
-          prev
+        activeQuoteIndex: prev
       });
     } else {
       this.setState({
         previousQuote: activeQuoteIndex,
-        activeQuoteIndex:
-          prev
+        activeQuoteIndex: prev
       });
     }
   };
@@ -156,72 +156,86 @@ export default class App extends Component<Props> {
       });
 
       return (
-
-        console.disableYellowBox = true,
-        <Swiper  showsButtons={true} prevButton= <View><TouchableWithoutFeedback onPress={state => this.onSwipeRight(state)}><Text style={styles.buttonText}>‹</Text></TouchableWithoutFeedback></View>
-        nextButton= <View><TouchableWithoutFeedback onPress={state => this.onSwipeLeft(state)}><Text style={styles.buttonText}>›</Text></TouchableWithoutFeedback></View> >
-        <GestureRecognizer
-          onSwipe={(direction, state) => this.onSwipe(direction, state)}
-          /*onSwipeUp={state => this.onSwipeUp(state)}
-          onSwipeDown={state => this.onSwipeDown(state)}*/
-          onSwipeLeft={state => this.onSwipeLeft(state)}
-          onSwipeRight={state => this.onSwipeRight(state)}
-          style={{
-            flex: 1,
-            backgroundColor: this.state.backgroundColor
-          }}
-        >
-          <View style={styles.container}>
-
-            <StatusBar translucent backgroundColor="rgba(0,0,0,0.2)" />
-
-            <View style={{ margin: 20, backgroundColor: "#9c27b0",flexDirection: "row",
-            margin: 20,
-            justifyContent: "flex-start",
-            alignItems: "center",
-
-          }}>
-              <Button
-                icon="menu"
-                mode="contained"
-                onPress={this._shareMessage}
-                style={{
-                  justifyContent: "flex-start",
-                  backgroundColor: "#ab47bc",
-                  top:40,
-                  left:0,
-                }}
-              > To Favourites
-              </Button>
-
+        (console.disableYellowBox = true),
+        (
+          <Swiper
+            showsButtons={true}
+            prevButton=<View>
+              <TouchableWithoutFeedback
+                onPress={state => this.onSwipeRight(state)}
+              >
+                <Text style={styles.buttonText}>‹</Text>
+              </TouchableWithoutFeedback>
             </View>
-
-
-            {quotes[this.state.activeQuoteIndex]}
-            <View
+            nextButton=<View>
+              <TouchableWithoutFeedback
+                onPress={state => this.onSwipeLeft(state)}
+              >
+                <Text style={styles.buttonText}>›</Text>
+              </TouchableWithoutFeedback>
+            </View>
+          >
+            <GestureRecognizer
+              onSwipe={(direction, state) => this.onSwipe(direction, state)}
+              /*onSwipeUp={state => this.onSwipeUp(state)}
+          onSwipeDown={state => this.onSwipeDown(state)}*/
+              onSwipeLeft={state => this.onSwipeLeft(state)}
+              onSwipeRight={state => this.onSwipeRight(state)}
               style={{
-                flexDirection: "row",
-                margin: 20,
-                justifyContent: "center",
-                alignItems: "center"
+                flex: 1,
+                backgroundColor: this.state.backgroundColor
               }}
             >
+              <View style={styles.container}>
+                <StatusBar translucent backgroundColor="rgba(0,0,0,0.2)" />
 
-              <View style={{ margin: 20, backgroundColor: "#d05ce3" }}>
-                <Button
-                  icon="share"
-                  mode="contained"
-                  onPress={this._shareMessage}
+                <View
                   style={{
-                    justifyContent: "center",
-                    backgroundColor: "#d05ce3"
+                    margin: 20,
+                    backgroundColor: "#9c27b0",
+                    flexDirection: "row",
+                    justifyContent: "flex-start",
+                    alignItems: "center",
+                    top: 30
                   }}
                 >
-                  Share
-                </Button>
-              </View>
+                  <Button
+                    icon="menu"
+                    mode="contained"
+                    onPress={this._shareMessage}
+                    style={{
+                      backgroundColor: "#ab47bc"
+                    }}
+                  >
+                    {" "}
+                    To Favourites
+                  </Button>
+                </View>
 
-              {/*  <View style={{backgroundColor: "#fff" }}>
+                {quotes[this.state.activeQuoteIndex]}
+                <View
+                  style={{
+                    flexDirection: "row",
+                    margin: 20,
+                    justifyContent: "center",
+                    alignItems: "center"
+                  }}
+                >
+                  <View style={{ margin: 20, backgroundColor: "#d05ce3" }}>
+                    <Button
+                      icon="share"
+                      mode="contained"
+                      onPress={this._shareMessage}
+                      style={{
+                        justifyContent: "center",
+                        backgroundColor: "#d05ce3"
+                      }}
+                    >
+                      Share
+                    </Button>
+                  </View>
+
+                  {/*  <View style={{backgroundColor: "#fff" }}>
               <Button
                 icon= "favorite"
                 mode="text"
@@ -232,15 +246,16 @@ export default class App extends Component<Props> {
             </View>
           */}
 
-            {/*<View style={{ margin: 20, backgroundColor: "#fff" }}>
+                  {/*<View style={{ margin: 20, backgroundColor: "#fff" }}>
                 <Button icon= "favorite" mode="outlined" onPress={this.nextQuote}>
                   Favourite
                 </Button>
               </View>*/}
-            </View>
-          </View>
-        </GestureRecognizer>
-        </Swiper>
+                </View>
+              </View>
+            </GestureRecognizer>
+          </Swiper>
+        )
       );
     }
   }
@@ -280,8 +295,8 @@ const styles = StyleSheet.create({
   button1: {
     paddingHorizontal: 50,
     paddingVertical: 50,
-    borderRadius: 1.5,
-},
+    borderRadius: 1.5
+  },
   author: {
     fontSize: 24,
     paddingTop: 10,
@@ -289,8 +304,8 @@ const styles = StyleSheet.create({
     fontFamily: "LibreFranklin-Regular"
   },
   buttonText: {
-    fontSize:40,
-    color:"#fff"
+    fontSize: 40,
+    color: "#fff"
   },
   item: {
     flex: 1,
