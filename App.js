@@ -156,6 +156,7 @@ export default class App extends Component<Props> {
       });
 
       return (
+
         console.disableYellowBox = true,
         <Swiper  showsButtons={true} prevButton= <View><TouchableWithoutFeedback onPress={state => this.onSwipeRight(state)}><Text style={styles.buttonText}>‹</Text></TouchableWithoutFeedback></View>
         nextButton= <View><TouchableWithoutFeedback onPress={state => this.onSwipeLeft(state)}><Text style={styles.buttonText}>›</Text></TouchableWithoutFeedback></View> >
@@ -171,7 +172,30 @@ export default class App extends Component<Props> {
           }}
         >
           <View style={styles.container}>
+
             <StatusBar translucent backgroundColor="rgba(0,0,0,0.2)" />
+
+            <View style={{ margin: 20, backgroundColor: "#9c27b0",flexDirection: "row",
+            margin: 20,
+            justifyContent: "flex-start",
+            alignItems: "center",
+
+          }}>
+              <Button
+                icon="menu"
+                mode="contained"
+                onPress={this._shareMessage}
+                style={{
+                  justifyContent: "flex-start",
+                  backgroundColor: "#ab47bc",
+                  top:40,
+                  left:0,
+                }}
+              > To Favourites
+              </Button>
+
+            </View>
+
 
             {quotes[this.state.activeQuoteIndex]}
             <View
@@ -182,6 +206,7 @@ export default class App extends Component<Props> {
                 alignItems: "center"
               }}
             >
+
               <View style={{ margin: 20, backgroundColor: "#d05ce3" }}>
                 <Button
                   icon="share"
@@ -207,11 +232,11 @@ export default class App extends Component<Props> {
             </View>
           */}
 
-              <View style={{ margin: 20, backgroundColor: "#fff" }}>
+            {/*<View style={{ margin: 20, backgroundColor: "#fff" }}>
                 <Button icon= "favorite" mode="outlined" onPress={this.nextQuote}>
                   Favourite
                 </Button>
-              </View>
+              </View>*/}
             </View>
           </View>
         </GestureRecognizer>
@@ -252,6 +277,11 @@ const styles = StyleSheet.create({
     fontFamily: "Cinzel-Regular",
     color: "#fff"
   },
+  button1: {
+    paddingHorizontal: 50,
+    paddingVertical: 50,
+    borderRadius: 1.5,
+},
   author: {
     fontSize: 24,
     paddingTop: 10,
