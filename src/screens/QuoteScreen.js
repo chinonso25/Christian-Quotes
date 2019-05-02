@@ -12,7 +12,6 @@ import {
 } from "react-native";
 import { Appbar, Button } from "react-native-paper";
 
-import Icon from "react-native-ionicons";
 import JString from "../../jsonfile";
 import GestureRecognizer, {
   swipeDirections
@@ -197,7 +196,7 @@ export default class App extends Component<Props> {
                   <Button
                     icon="menu"
                     mode="contained"
-                    onPress={this._shareMessage}
+                    onPress={() => this.props.navigation.navigate('SavedQuotes')}
                     style={{
                       backgroundColor: "#ab47bc"
                     }}
