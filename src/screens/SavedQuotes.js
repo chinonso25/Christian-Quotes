@@ -8,73 +8,30 @@ import {
   ScrollView,
   Share,
   StatusBar,
-  TouchableWithoutFeedback
-} from "react-native";
-import { Appbar, Button, List } from "react-native-paper";
+  TouchableWithoutFeedback,
+  FlatList
 
-import JString from "../../jsonfile";
-import GestureRecognizer, {
-  swipeDirections
-} from "react-native-swipe-gestures";
-import Swiper from "react-native-swiper";
+} from "react-native";
+import { Button } from "react-native-paper";
+import { QuotesSchema, QUOTES_SCHEMA } from "../database/allSchemas";
+
+const Realm = require("realm");
+const databaseOptions = {
+  path: "Quotes.realm",
+  schema: [QuotesSchema],
+  schemaVersion: 0
+};
 
 export default class App extends Component<Props> {
   constructor(props) {
     super(props);
-    this._shareMessage = this._shareMessage.bind(this);
     this.state = {
-      isLoading: true,
-      dataSource: null,
-      activeQuoteIndex: 0,
-      result: "",
-      gestureName: "none",
-      previousQuote: 0
+      result: '',
+      arrayResult: []
     };
   }
 
-  onSwipeLeft(gestureState) {
-    this.nextQuote();
-  }
 
-  onSwipeRight(gestureState) {
-    this.prevQuote(this.state.previousQuote);
-  }
-
-  onSwipe(gestureName, gestureState) {
-    const {
-      /*SWIPE_UP, SWIPE_DOWN,*/ SWIPE_LEFT,
-      SWIPE_RIGHT
-    } = swipeDirections;
-    this.setState({ gestureName: gestureName });
-    switch (gestureName) {
-      /*case SWIPE_UP:
-        this.setState({ backgroundColor: "red" });
-        break;*/
-      /*case SWIPE_DOWN:
-        this.setState({ backgroundColor: "green" });
-        break;*/
-      case SWIPE_LEFT:
-        this.nextQuote();
-        break;
-      case SWIPE_RIGHT:
-        this.nextQuote();
-        break;
-    }
-  }
-
-  componentWillMount() {
-    return fetch(JString)
-      .then(response => response.json())
-      .then(responseJson => {
-        this.setState({
-          isLoading: false,
-          dataSource: responseJson.quotes
-        });
-      })
-      .catch(error => {
-        console.log(error);
-      });
-  }
 
   _shareMessage() {
     var author = JSON.stringify(
@@ -92,103 +49,116 @@ export default class App extends Component<Props> {
     }).then();
   }
 
-  nextQuote = () => {
-    const { activeQuoteIndex } = this.state;
+  componentWillMount() {
+     Realm.open(databaseOptions)
+      .then(realm => {
+        let FavQuotes = realm.objects("quote");
+        this.setState({
+          result: FavQuotes[1].Message,
+          arrayResult: FavQuotes
 
-    if (activeQuoteIndex < this.state.dataSource.length - 1) {
-      this.setState({
-        previousQuote: activeQuoteIndex,
-        activeQuoteIndex:
-          Math.floor(Math.random() * this.state.dataSource.length - 0) + 0
+        });
+
+        console.log(`  ${this.state.arrayResult[1].Message}+"Is it working"`);
+        console.log(`  ${this.state.arrayResult.length}+"Length"`);
+
+        for (i = 0; i < this.state.arrayResult.length; i++) {
+            console.log(`${this.state.arrayResult[i].Message}+"Yee"`);
+        }
+
+      })
+      .catch(error => {
+        console.log(error);
       });
-    } else {
-      this.setState({
-        previousQuote: activeQuoteIndex,
-        activeQuoteIndex:
-          Math.floor(Math.random() * this.state.dataSource.length - 0) + 0
-      });
-    }
-  };
 
-  prevQuote = prev => {
-    const { activeQuoteIndex } = this.state;
-
-    if (activeQuoteIndex < this.state.dataSource.length - 1) {
-      this.setState({
-        activeQuoteIndex: prev
-      });
-    } else {
-      this.setState({
-        previousQuote: activeQuoteIndex,
-        activeQuoteIndex: prev
-      });
-    }
-  };
-
-  render() {
-      return (
-        (console.disableYellowBox = true),
-        (
-          <View style={styles.container}>
-            <StatusBar translucent backgroundColor="rgba(0,0,0,0.2)" />
-
-            <View
-              style={{
-                margin: 20,
-                backgroundColor: "#d05ce3",
-                flexDirection: "row",
-                justifyContent: "flex-start",
-                alignItems: "center",
-                top: 30
-              }}
-            >
-              <Button
-                icon="menu"
-                mode="contained"
-                onPress={() => this.props.navigation.navigate("QuoteScreen")}
-                style={{
-                  backgroundColor: "#9c27b0"
-                }}
-              >
-                To Quotes
-              </Button>
-            </View>
-            <List.Item
-                title="First Item"
-                description="Item description"
-                left={props => <List.Icon {...props} icon="folder" />}
-              />
-            <View
-              style={{
-                flexDirection: "row",
-                margin: 20,
-                justifyContent: "center",
-                alignItems: "center"
-              }}
-            >
-              {/*  <View style={{backgroundColor: "#fff" }}>
-              <Button
-                icon= "favorite"
-                mode="text"
-                onPress={this._shareMessage}
-                style={{ justifyContent: "center" }}
-              >Fav
-              </Button>
-            </View>
-          */}
-
-              {/*<View style={{ margin: 20, backgroundColor: "#fff" }}>
-                <Button icon= "favorite" mode="outlined" onPress={this.nextQuote}>
-                  Favourite
-                </Button>
-              </View>*/}
-            </View>
-          </View>
-        )
-      );
-    }
   }
 
+
+  render() {
+
+
+
+
+
+      let quotes = this.state.arrayResult.map((val, key) => {
+        return (
+          <View key={key} style={styles.item}>
+
+
+            <Text selectable={true} style={styles.message}>
+              {val.Message}
+
+
+            </Text>
+            <Text selectable={true} style={styles.author}>
+              -{val.Author}
+            </Text>
+
+            <Button
+              icon="share"
+              mode="contained"
+              onPress={this._shareMessage}
+              style={{
+                justifyContent: "center",
+                backgroundColor: "#9c27b0",
+                margin:20
+              }}
+            >
+              Share
+            </Button>
+            <View style={{ padding: 10, borderBottomColor: '#616161',  borderBottomWidth: 0.5, width: '80%'}}/>
+          </View>
+        );
+      });
+
+
+
+
+
+
+
+      console.log(`  ${this.state.result[1] + " Test"}`);
+
+    return (
+      <View style={styles.container}>
+        <StatusBar translucent backgroundColor="rgba(0,0,0,0.2)" />
+
+        <View
+          style={{
+            margin: 20,
+            backgroundColor: "#d05ce3",
+            flexDirection: "row",
+            justifyContent: "flex-start",
+            alignItems: "center",
+            top: 15
+          }}
+        >
+          <Button
+            icon="menu"
+            mode="contained"
+            onPress={() => this.props.navigation.navigate("QuoteScreen")}
+            style={{
+              backgroundColor: "#9c27b0"
+            }}
+          >
+            To Quotes
+          </Button>
+        </View>
+        <ScrollView>
+          {quotes}
+          </ScrollView>
+        <View
+          style={{
+            flexDirection: "row",
+            margin: 20,
+            justifyContent: "center",
+            alignItems: "center"
+          }}
+        />
+      </View>
+    );
+  }
+}
 
 const styles = StyleSheet.create({
   container: {

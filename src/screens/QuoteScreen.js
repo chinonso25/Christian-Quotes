@@ -17,6 +17,16 @@ import GestureRecognizer, {
   swipeDirections
 } from "react-native-swipe-gestures";
 import Swiper from "react-native-swiper";
+import { QuotesSchema, QUOTES_SCHEMA } from '../database/allSchemas';
+
+
+
+import Realm from "realm";
+const databaseOptions = {
+  path: 'Quotes.realm',
+  schema: [QuotesSchema],
+  schemaVersion: 0
+};
 
 export default class App extends Component<Props> {
   constructor(props) {
@@ -30,6 +40,22 @@ export default class App extends Component<Props> {
       gestureName: "none",
       previousQuote: 0
     };
+  }
+
+  saveFavourite() {
+    Realm.open(databaseOptions)
+      .then(realm => {
+        realm.write(() => {
+          realm.create(QuotesSchema.name, { Message: this.state.dataSource[this.state.activeQuoteIndex].message, Author: this.state.dataSource[this.state.activeQuoteIndex].author });
+          console.log('created');
+          console.log(realm.path)
+
+
+        });
+      })
+      .catch(error => {
+        console.log(error);
+      });
   }
 
   onSwipeLeft(gestureState) {
@@ -150,7 +176,6 @@ export default class App extends Component<Props> {
       });
 
       return (
-        (console.disableYellowBox = true),
         (
           <Swiper
             showsButtons={true}
@@ -190,7 +215,7 @@ export default class App extends Component<Props> {
                     flexDirection: "row",
                     justifyContent: "flex-start",
                     alignItems: "center",
-                    top: 30
+                    top: 15
                   }}
                 >
                   <Button
@@ -229,22 +254,13 @@ export default class App extends Component<Props> {
                     </Button>
                   </View>
 
-                  {/*  <View style={{backgroundColor: "#fff" }}>
-              <Button
-                icon= "favorite"
-                mode="text"
-                onPress={this._shareMessage}
-                style={{ justifyContent: "center" }}
-              >Fav
-              </Button>
-            </View>
-          */}
 
-                  {/*<View style={{ margin: 20, backgroundColor: "#fff" }}>
-                <Button icon= "favorite" mode="outlined" onPress={this.nextQuote}>
+
+                  <View style={{ margin: 20, backgroundColor: "#fff" }}>
+                <Button icon= "favorite" mode="outlined" onPress={this.saveFavourite.bind(this)}>
                   Favourite
                 </Button>
-              </View>*/}
+              </View>
                 </View>
               </View>
             </GestureRecognizer>
