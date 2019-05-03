@@ -91,6 +91,7 @@ export default class App extends Component<Props> {
 
 
   componentWillMount() {
+    console.disableYellowBox = true;
     return fetch(JString)
       .then(response => response.json())
       .then(responseJson => {

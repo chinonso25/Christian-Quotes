@@ -50,6 +50,7 @@ export default class App extends Component<Props> {
   }
 
   componentWillMount() {
+    console.disableYellowBox = true;
      Realm.open(databaseOptions)
       .then(realm => {
         let FavQuotes = realm.objects("quote");
@@ -58,14 +59,6 @@ export default class App extends Component<Props> {
           arrayResult: FavQuotes
 
         });
-
-        console.log(`  ${this.state.arrayResult[1].Message}+"Is it working"`);
-        console.log(`  ${this.state.arrayResult.length}+"Length"`);
-
-        for (i = 0; i < this.state.arrayResult.length; i++) {
-            console.log(`${this.state.arrayResult[i].Message}+"Yee"`);
-        }
-
       })
       .catch(error => {
         console.log(error);
@@ -94,7 +87,7 @@ export default class App extends Component<Props> {
               -{val.Author}
             </Text>
 
-            <Button
+          {/*  <Button
               icon="share"
               mode="contained"
               onPress={this._shareMessage}
@@ -105,8 +98,8 @@ export default class App extends Component<Props> {
               }}
             >
               Share
-            </Button>
-            <View style={{ padding: 10, borderBottomColor: '#616161',  borderBottomWidth: 0.5, width: '80%'}}/>
+            </Button> */}
+            <View style={{ padding: 10, borderBottomColor: '#fff',  borderBottomWidth: 0.5, width: '80%'}}/>
           </View>
         );
       });
@@ -126,7 +119,7 @@ export default class App extends Component<Props> {
         <View
           style={{
             margin: 20,
-            backgroundColor: "#d05ce3",
+            backgroundColor: "#ab47bc",
             flexDirection: "row",
             justifyContent: "flex-start",
             alignItems: "center",
@@ -163,7 +156,7 @@ export default class App extends Component<Props> {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#d05ce3"
+    backgroundColor: "#ab47bc"
   },
   headtitle: {
     alignItems: "center",
@@ -183,7 +176,7 @@ const styles = StyleSheet.create({
   },
 
   message: {
-    fontSize: 26,
+    fontSize: 20,
     textAlign: "center",
     marginBottom: 10,
     paddingTop: 30,
@@ -191,13 +184,8 @@ const styles = StyleSheet.create({
     fontFamily: "Cinzel-Regular",
     color: "#fff"
   },
-  button1: {
-    paddingHorizontal: 50,
-    paddingVertical: 50,
-    borderRadius: 1.5
-  },
   author: {
-    fontSize: 24,
+    fontSize: 16,
     paddingTop: 10,
     color: "#fff",
     fontFamily: "LibreFranklin-Regular"
