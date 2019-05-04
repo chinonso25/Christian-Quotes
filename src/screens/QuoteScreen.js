@@ -11,7 +11,7 @@ import {
   TouchableWithoutFeedback
 } from "react-native";
 import { Appbar, Button } from "react-native-paper";
-import SplashScreen from "./SplashScreen"
+import SplashScreen from "./SplashScreen";
 
 import JString from "../../jsonfile";
 import GestureRecognizer, {
@@ -280,7 +280,7 @@ const styles = StyleSheet.create({
 
   ActivityIndicatorStyle: {
     flex: 1,
-    width:"100%",
+    width: "100%",
     justifyContent: "center",
     alignItems: "center"
   },
