@@ -30,20 +30,38 @@ export default class App extends Component<Props> {
     };
   }
 
-  _shareMessage() {
-    var author = JSON.stringify(
-      this.state.dataSource[this.state.activeQuoteIndex].author
-    );
-    author = author.split('"').join("");
+  _shareMessage(mess,auth) {
+
 
     Share.share({
       message:
-        JSON.stringify(
-          this.state.dataSource[this.state.activeQuoteIndex].message
-        ) +
+        mess +
         "\n\n-  " +
-        author
+        auth
     }).then();
+  }
+
+
+  _deleteQuote(val){
+    Realm.open(databaseOptions)
+      .then(realm => {
+
+
+        realm.write(() => {
+          let DelQuotes = realm.objects("quote");
+          let tanDogs = DelQuotes.filtered('Message == $0',val);
+          realm.delete(tanDogs);
+          this.forceUpdate()
+          console.log('Deleted');
+
+        });
+
+
+      })
+      .catch(error => {
+        console.log(error);
+      });
+
   }
 
   componentWillMount() {
@@ -63,6 +81,11 @@ export default class App extends Component<Props> {
 
   render() {
     let quotes = this.state.arrayResult.map((val, key) => {
+      var mes;
+      var mes = val.Message;
+      var auth = val.Author;
+
+
       return (
         <View key={key} style={styles.item}>
           <Text selectable={true} style={styles.message}>
@@ -72,18 +95,41 @@ export default class App extends Component<Props> {
             -{val.Author}
           </Text>
 
-          {/*  <Button
+          <View
+            style={{
+              flexDirection: "row",
+              margin: 10,
+              justifyContent: "center",
+              alignItems: "center"
+            }}
+          >
+
+
+          <View style={{ margin: 10, backgroundColor: "#d05ce3" }}>
+            <Button
               icon="share"
               mode="contained"
-              onPress={this._shareMessage}
+              onPress={() => this._shareMessage(mes,auth)}
               style={{
                 justifyContent: "center",
-                backgroundColor: "#9c27b0",
-                margin:20
+                backgroundColor: "#d05ce3"
               }}
             >
               Share
-            </Button> */}
+            </Button>
+          </View>
+
+          <View style={{ margin: 10, backgroundColor: "#fff" }}>
+            <Button
+              icon="delete"
+              mode="outlined"
+              onPress={() => this._deleteQuote(mes)}
+            >
+              Delete
+            </Button>
+          </View>
+          </View>
+
           <View
             style={{
               padding: 10,
