@@ -1,0 +1,87 @@
+
+{
+"message":"Faith is taking God seriously.",
+"author":"Derek Prince"
+},
+{
+"message":"If you want to be popular, preach happiness. If you want to be unpopular, preach holiness.",
+"author":"Leonard Ravenhill"
+},
+{
+"message":"The early Church was married to poverty, prisons and persecutions. Today, the church is married to prosperity, personality, and popularity.",
+"author":"Leonard Ravenhill"
+},
+{
+"message":"How can you pull down strongholds of Satan if you don't even have the strength to turn off your TV?",
+"author":"Leonard Ravenhill"
+},
+{
+"message":"The world says love yourself, grab all you can, follow your heart. Jesus says deny yourself, grab your cross and follow me.",
+"author":"Francis Chan"
+},
+{
+"message":"We should be so joyful from God's grace that others would respond by saying, 'I wish I had your God.",
+"author":"Francis Chan"
+},
+{
+"message":"We never grow closer to God when we just live life. It takes deliberate pursuit and attentiveness.",
+"author":"Francis Chan"
+},
+{
+"message":"Jesus Christ knows the worst about you. Nonetheless, He is the one who loves you the most.",
+"author":"A. W. Tozer"
+},
+{
+"message":"Worshipers never leave church...we carry our sanctuary with us wherever we go.",
+"author":"A. W. Tozer"
+},
+{
+"message":"Most Christians don't hear God's voice because we've already decided we aren't going to do what He says.",
+"author":"A. W. Tozer"
+},
+{
+"message":"The remarkable thing about God is that when you fear God, you fear nothing else, whereas if you do not fear God, you fear everything else.",
+"author":"Oswald Chambers"
+},
+{
+"message":"We pray when there's nothing else we can do; Jesus wants us to pray before we do anything at all.",
+"author":"Oswald Chambers"
+},
+{
+"message":"If you are not concerned about your neighbor's salvation, then I am concerned for yours.",
+"author":"Ray Comfort"
+},
+{
+"message":"Atheists who keep asking for evidence of God's existence are like a fish in the ocean wanting evidence of water.",
+"author":"Ray Comfort"
+},
+
+{
+"message":"The true gospel is a call to self-denial. It is not a call to self-fulfillment.",
+"author":"John F. MacArthur"
+},
+{
+"message":"We should not be entertained by the sins for which Christ died.",
+"author":"John F. MacArthur"
+},
+{
+"message":"It is one thing to believe in God; it is quite another to believe God.",
+"author":"R. C. Sproul"
+},
+{
+"message":"When you come to religion, you come to a place. When you come to Jesus Christ, you come to a person.",
+"author":"Ravi Zacharias"
+},
+
+{
+"message":"I have given God countless reasons not to love me. None of them has been strong enough to change Him.",
+"author":"Paul Washer"
+},
+{
+"message":"The true convert does not receive the gospel as an addition to his previous life, but in exchange for it.",
+"author":"Paul Washer"
+},
+{
+"message":"You are a steward of every moment, of every talent, of every gift, of every resource that God has given you. Chose wisely what you do today!",
+"author":"Paul Washer"
+},

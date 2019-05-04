@@ -10,7 +10,6 @@ import {
   StatusBar,
   TouchableWithoutFeedback,
   FlatList
-
 } from "react-native";
 import { Button } from "react-native-paper";
 import { QuotesSchema, QUOTES_SCHEMA } from "../database/allSchemas";
@@ -26,12 +25,10 @@ export default class App extends Component<Props> {
   constructor(props) {
     super(props);
     this.state = {
-      result: '',
+      result: "",
       arrayResult: []
     };
   }
-
-
 
   _shareMessage() {
     var author = JSON.stringify(
@@ -51,41 +48,29 @@ export default class App extends Component<Props> {
 
   componentWillMount() {
     console.disableYellowBox = true;
-     Realm.open(databaseOptions)
+    Realm.open(databaseOptions)
       .then(realm => {
         let FavQuotes = realm.objects("quote");
         this.setState({
           result: FavQuotes[1].Message,
           arrayResult: FavQuotes
-
         });
       })
       .catch(error => {
         console.log(error);
       });
-
   }
 
-
   render() {
-
-
-
-
-
-      let quotes = this.state.arrayResult.map((val, key) => {
-        return (
-          <View key={key} style={styles.item}>
-
-
-            <Text selectable={true} style={styles.message}>
-              {val.Message}
-
-
-            </Text>
-            <Text selectable={true} style={styles.author}>
-              -{val.Author}
-            </Text>
+    let quotes = this.state.arrayResult.map((val, key) => {
+      return (
+        <View key={key} style={styles.item}>
+          <Text selectable={true} style={styles.message}>
+            {val.Message}
+          </Text>
+          <Text selectable={true} style={styles.author}>
+            -{val.Author}
+          </Text>
 
           {/*  <Button
               icon="share"
@@ -99,18 +84,19 @@ export default class App extends Component<Props> {
             >
               Share
             </Button> */}
-            <View style={{ padding: 10, borderBottomColor: '#fff',  borderBottomWidth: 0.5, width: '80%'}}/>
-          </View>
-        );
-      });
+          <View
+            style={{
+              padding: 10,
+              borderBottomColor: "#fff",
+              borderBottomWidth: 0.5,
+              width: "80%"
+            }}
+          />
+        </View>
+      );
+    });
 
-
-
-
-
-
-
-      console.log(`  ${this.state.result[1] + " Test"}`);
+    console.log(`  ${this.state.result[1] + " Test"}`);
 
     return (
       <View style={styles.container}>
@@ -137,9 +123,7 @@ export default class App extends Component<Props> {
             To Quotes
           </Button>
         </View>
-        <ScrollView>
-          {quotes}
-          </ScrollView>
+        <ScrollView>{quotes}</ScrollView>
         <View
           style={{
             flexDirection: "row",

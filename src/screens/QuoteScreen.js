@@ -11,19 +11,18 @@ import {
   TouchableWithoutFeedback
 } from "react-native";
 import { Appbar, Button } from "react-native-paper";
+import SplashScreen from "./SplashScreen"
 
 import JString from "../../jsonfile";
 import GestureRecognizer, {
   swipeDirections
 } from "react-native-swipe-gestures";
 import Swiper from "react-native-swiper";
-import { QuotesSchema, QUOTES_SCHEMA } from '../database/allSchemas';
-
-
+import { QuotesSchema, QUOTES_SCHEMA } from "../database/allSchemas";
 
 import Realm from "realm";
 const databaseOptions = {
-  path: 'Quotes.realm',
+  path: "Quotes.realm",
   schema: [QuotesSchema],
   schemaVersion: 0
 };
@@ -46,11 +45,12 @@ export default class App extends Component<Props> {
     Realm.open(databaseOptions)
       .then(realm => {
         realm.write(() => {
-          realm.create(QuotesSchema.name, { Message: this.state.dataSource[this.state.activeQuoteIndex].message, Author: this.state.dataSource[this.state.activeQuoteIndex].author });
-          console.log('created');
-          console.log(realm.path)
-
-
+          realm.create(QuotesSchema.name, {
+            Message: this.state.dataSource[this.state.activeQuoteIndex].message,
+            Author: this.state.dataSource[this.state.activeQuoteIndex].author
+          });
+          console.log("created");
+          console.log(realm.path);
         });
       })
       .catch(error => {
@@ -87,8 +87,6 @@ export default class App extends Component<Props> {
         break;
     }
   }
-
-
 
   componentWillMount() {
     console.disableYellowBox = true;
@@ -158,7 +156,7 @@ export default class App extends Component<Props> {
     if (this.state.isLoading) {
       return (
         <View style={styles.ActivityIndicatorStyle}>
-          <ActivityIndicator />
+          <SplashScreen />
         </View>
       );
     } else {
@@ -177,96 +175,95 @@ export default class App extends Component<Props> {
       });
 
       return (
-        (
-          <Swiper
-            showsButtons={true}
-            prevButton=<View>
-              <TouchableWithoutFeedback
-                onPress={state => this.onSwipeRight(state)}
-              >
-                <Text style={styles.buttonText}>‹</Text>
-              </TouchableWithoutFeedback>
-            </View>
-            nextButton=<View>
-              <TouchableWithoutFeedback
-                onPress={state => this.onSwipeLeft(state)}
-              >
-                <Text style={styles.buttonText}>›</Text>
-              </TouchableWithoutFeedback>
-            </View>
-          >
-            <GestureRecognizer
-              onSwipe={(direction, state) => this.onSwipe(direction, state)}
-              /*onSwipeUp={state => this.onSwipeUp(state)}
-          onSwipeDown={state => this.onSwipeDown(state)}*/
-              onSwipeLeft={state => this.onSwipeLeft(state)}
-              onSwipeRight={state => this.onSwipeRight(state)}
-              style={{
-                flex: 1,
-                backgroundColor: this.state.backgroundColor
-              }}
+        <Swiper
+          showsButtons={true}
+          prevButton=<View>
+            <TouchableWithoutFeedback
+              onPress={state => this.onSwipeRight(state)}
             >
-              <View style={styles.container}>
-                <StatusBar translucent backgroundColor="rgba(0,0,0,0.2)" />
+              <Text style={styles.buttonText}>‹</Text>
+            </TouchableWithoutFeedback>
+          </View>
+          nextButton=<View>
+            <TouchableWithoutFeedback
+              onPress={state => this.onSwipeLeft(state)}
+            >
+              <Text style={styles.buttonText}>›</Text>
+            </TouchableWithoutFeedback>
+          </View>
+        >
+          <GestureRecognizer
+            onSwipe={(direction, state) => this.onSwipe(direction, state)}
+            /*onSwipeUp={state => this.onSwipeUp(state)}
+          onSwipeDown={state => this.onSwipeDown(state)}*/
+            onSwipeLeft={state => this.onSwipeLeft(state)}
+            onSwipeRight={state => this.onSwipeRight(state)}
+            style={{
+              flex: 1,
+              backgroundColor: this.state.backgroundColor
+            }}
+          >
+            <View style={styles.container}>
+              <StatusBar translucent backgroundColor="rgba(0,0,0,0.2)" />
 
-                <View
+              <View
+                style={{
+                  margin: 20,
+                  backgroundColor: "#9c27b0",
+                  flexDirection: "row",
+                  justifyContent: "flex-start",
+                  alignItems: "center",
+                  top: 15
+                }}
+              >
+                <Button
+                  icon="menu"
+                  mode="contained"
+                  onPress={() => this.props.navigation.navigate("SavedQuotes")}
                   style={{
-                    margin: 20,
-                    backgroundColor: "#9c27b0",
-                    flexDirection: "row",
-                    justifyContent: "flex-start",
-                    alignItems: "center",
-                    top: 15
+                    backgroundColor: "#ab47bc"
                   }}
                 >
+                  {" "}
+                  To Favourites
+                </Button>
+              </View>
+              {quotes[this.state.activeQuoteIndex]}
+              <View
+                style={{
+                  flexDirection: "row",
+                  margin: 20,
+                  justifyContent: "center",
+                  alignItems: "center"
+                }}
+              >
+                <View style={{ margin: 20, backgroundColor: "#d05ce3" }}>
                   <Button
-                    icon="menu"
+                    icon="share"
                     mode="contained"
-                    onPress={() => this.props.navigation.navigate('SavedQuotes')}
+                    onPress={this._shareMessage}
                     style={{
-                      backgroundColor: "#ab47bc"
+                      justifyContent: "center",
+                      backgroundColor: "#d05ce3"
                     }}
                   >
-                    {" "}
-                    To Favourites
+                    Share
                   </Button>
                 </View>
 
-                {quotes[this.state.activeQuoteIndex]}
-                <View
-                  style={{
-                    flexDirection: "row",
-                    margin: 20,
-                    justifyContent: "center",
-                    alignItems: "center"
-                  }}
-                >
-                  <View style={{ margin: 20, backgroundColor: "#d05ce3" }}>
-                    <Button
-                      icon="share"
-                      mode="contained"
-                      onPress={this._shareMessage}
-                      style={{
-                        justifyContent: "center",
-                        backgroundColor: "#d05ce3"
-                      }}
-                    >
-                      Share
-                    </Button>
-                  </View>
-
-
-
-                  <View style={{ margin: 20, backgroundColor: "#fff" }}>
-                <Button icon= "favorite" mode="outlined" onPress={this.saveFavourite.bind(this)}>
-                  Favourite
-                </Button>
-              </View>
+                <View style={{ margin: 20, backgroundColor: "#fff" }}>
+                  <Button
+                    icon="favorite"
+                    mode="outlined"
+                    onPress={this.saveFavourite.bind(this)}
+                  >
+                    Favourite
+                  </Button>
                 </View>
               </View>
-            </GestureRecognizer>
-          </Swiper>
-        )
+            </View>
+          </GestureRecognizer>
+        </Swiper>
       );
     }
   }
@@ -285,6 +282,7 @@ const styles = StyleSheet.create({
 
   ActivityIndicatorStyle: {
     flex: 1,
+    width:"100%",
     justifyContent: "center",
     alignItems: "center"
   },
