@@ -95,9 +95,6 @@ export default class App extends Component<Props> {
         </View>
       );
     });
-
-    console.log(`  ${this.state.result[1] + " Test"}`);
-
     return (
       <View style={styles.container}>
         <StatusBar translucent backgroundColor="rgba(0,0,0,0.2)" />

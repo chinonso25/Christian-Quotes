@@ -49,8 +49,6 @@ export default class App extends Component<Props> {
             Message: this.state.dataSource[this.state.activeQuoteIndex].message,
             Author: this.state.dataSource[this.state.activeQuoteIndex].author
           });
-          console.log("created");
-          console.log(realm.path);
         });
       })
       .catch(error => {
